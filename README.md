@@ -146,6 +146,35 @@ You should see the NGINX pod running.
 
 ---
 
+### 8. Change Replica Count
+
+To modify the replica count for the NGINX deployment, update the `replicas` field in the deployment manifest and commit the changes to your Git repository. For example, to scale to 3 replicas:
+
+```yaml
+spec:
+    replicas: 3
+```
+
+After committing the changes, ArgoCD will automatically sync the updated configuration to your cluster if automated sync is enabled. Alternatively, you can manually sync the application:
+
+```bash
+argocd app sync nginx-app
+```
+
+Verify the updated replica count:
+
+```bash
+kubectl get pods -n apps
+```
+
+---
+
+### 9. Monitor ArgoCD UI
+
+To monitor the application status and sync progress, open the ArgoCD UI at [https://localhost:8080](https://localhost:8080). Navigate to the `nginx-app` application to view its health, sync status, and logs.
+
+---
+
 ### Cleanup
 
 Delete the KinD cluster:
@@ -161,3 +190,4 @@ kind delete cluster --name argocd-poc
 - [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
 - [KinD Documentation](https://kind.sigs.k8s.io/)
 - [NGINX Docker Image](https://hub.docker.com/_/nginx)
+
